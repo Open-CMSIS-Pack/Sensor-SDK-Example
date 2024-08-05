@@ -1,0 +1,39 @@
+solution:
+  created-for: CMSIS-Toolbox@2.5.0
+  cdefault:
+
+  # List of tested compilers that can be selected
+  select-compiler:
+    - compiler: AC6
+    - compiler: GCC
+  # compiler: AC6
+
+  packs:
+    - pack: NXP::ISSDK@>=3.0.0-0
+
+  target-types:
+    # - type: <target_name>
+    #   board: <board_name>
+    #   variables:
+    #     - Board-Layer: <board_layer>.clayer.yml
+    #     - Shield-Layer: <shield_layer>.clayer.yml
+
+
+  build-types:
+    - type: debug
+      define:
+        - DEBUG
+      optimize: debug
+      debug: on
+
+    - type: release
+      define:
+        - NDEBUG
+      optimize: size
+      debug: off
+
+  projects:
+    - project: ./fifo/fxas21002_fifo.cproject.yml
+    - project: ./interrupt/fxas21002_interrupt.cproject.yml
+    - project: ./poll/fxas21002_poll.cproject.yml
+    - project: ./poll_spi/fxas21002_poll_spi.cproject.yml

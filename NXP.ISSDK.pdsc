@@ -1,0 +1,215 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<package schemaVersion="1.7.36" xmlns:xs="http://www.w3.org/2001/XMLSchema-instance" xs:noNamespaceSchemaLocation="https://raw.githubusercontent.com/Open-CMSIS-Pack/Open-CMSIS-Pack-Spec/v1.7.36/schema/PACK.xsd">
+  <name>ISSDK</name>
+  <vendor>NXP</vendor>
+  <description>Software Pack for issdk</description>
+  <url>https://mcuxpresso.nxp.com/cmsis_pack/repo/</url>
+  <license>LICENSE</license>
+  <licenseSets>
+    <licenseSet id="all" default="true" gating="true">
+      <license title="Apache 2.0 for CMSIS add-ons" name="licenses/LICENSE"       spdx="Apache-2.0"/>
+      <license title="BSD License for NXP ISSDK"    name="licenses/COPYING-BSD-3" spdx="BSD-3-Clause"/>
+    </licenseSet>
+  </licenseSets>
+  <releases>
+    <release version="3.1.0-dev">
+      - Remove components and conditions not used in reference examples
+      - Add reference examples
+      - Migrate Sensors from NXP GPIO Driver API to CMSIS-Driver GPIO API
+    </release>
+    <release version="3.0.0" date="2024-07-17">NXP CMSIS SWP Packs based on MCUXpresso SDK 2.16.0</release>
+    <release version="2.0.0" date="2024-01-14">NXP CMSIS SWP Packs based on MCUXpresso SDK 2.15.0</release>
+    <release version="1.0.0" date="2023-07-27">NXP CMSIS SWP Packs based on MCUXpresso SDK 2.14.0</release>
+  </releases>
+  <keywords>
+    <keyword>Software Pack</keyword>
+  </keywords>
+  <requirements>
+    <languages>
+      <language name="C" version="99"/>
+    </languages>
+  </requirements>
+  <conditions>
+    <condition id="ISSDK HAL">
+      <require Cclass="Sensors" Cgroup="issdk_hal" Cversion="1.0.0"/>
+      <require Cclass="CMSIS" Cgroup="CORE" Cversion="6.1.0"/>
+    </condition>
+    <condition id="Sensor ISSDK Interface I2C">
+      <require Cclass="Sensors" Cgroup="drivers" Csub="issdk_interfaces" Cvariant="I2C" Cversion="1.7.0"/>
+      <require Cclass="CMSIS Driver" Cgroup="GPIO" Capiversion="1.0.0"/>
+    </condition>
+    <condition id="Sensor ISSDK Interface SPI">
+      <require Cclass="Sensors" Cgroup="drivers" Csub="issdk_interfaces" Cvariant="SPI" Cversion="1.7.0"/>
+      <require Cclass="CMSIS Driver" Cgroup="GPIO" Capiversion="1.0.0"/>
+    </condition>
+    <condition id="Sensor Driver Interface I2C">
+      <require Cclass="Sensors" Cgroup="utils" Csub="systick_utils" Cversion="1.8.0"/>
+      <require Cclass="CMSIS Driver" Cgroup="I2C" Capiversion="2.4.0"/>
+    </condition>
+    <condition id="Sensor Driver Interface SPI">
+      <require Cclass="Sensors" Cgroup="utils" Csub="systick_utils" Cversion="1.8.0"/>
+      <require Cclass="CMSIS Driver" Cgroup="SPI" Capiversion="2.3.0"/>
+      <require Cclass="CMSIS Driver" Cgroup="GPIO" Capiversion="1.0.0"/>
+    </condition>
+  </conditions>
+  <components>
+    <component Cclass="Sensors" Cgroup="issdk_hal" Cversion="1.0.0">
+      <description>ISSDK HAL</description>
+      <files>
+        <file category="header" name="drivers/hal/issdk_hal.h" attr="config" version="1.0.0"/>
+      </files>
+    </component>
+    <component Cclass="Sensors" Cgroup="utils" Csub="systick_utils" Cversion="1.8.0" condition="ISSDK HAL">
+      <description>ISSDK Utils</description>
+      <files>
+        <file category="sourceC" name="drivers/systick/systick_utils.c" projectpath="utilities"/>
+        <file category="header" name="drivers/systick/systick_utils.h" projectpath="utilities"/>
+      </files>
+    </component>
+    <component Cclass="Sensors" Cgroup="sensors" Csub="issdk_fxas21002" Cvariant="I2C" Cversion="1.8.0" condition="Sensor ISSDK Interface I2C">
+      <description>ISSDK FXAS21002 Sensor Driver Files - I2C</description>
+      <files>
+        <file category="header" name="sensors/fxas21002.h" projectpath="sensors"/>
+        <file category="header" name="sensors/fxas21002_drv_i2c.h" projectpath="sensors"/>
+        <file category="sourceC" name="sensors/fxas21002_drv_i2c.c" projectpath="sensors"/>
+      </files>
+    </component>
+    <component Cclass="Sensors" Cgroup="sensors" Csub="issdk_fxas21002" Cvariant="SPI" Cversion="1.8.0" condition="Sensor ISSDK Interface SPI">
+      <description>ISSDK FXAS21002 Sensor Driver Files - SPI</description>
+      <files>
+        <file category="header" name="sensors/fxas21002.h" projectpath="sensors"/>
+        <file category="header" name="sensors/fxas21002_drv_spi.h" projectpath="sensors"/>
+        <file category="sourceC" name="sensors/fxas21002_drv_spi.c" projectpath="sensors"/>
+      </files>
+    </component>
+    <component Cclass="Sensors" Cgroup="sensors" Csub="issdk_fxls8962" Cvariant="I2C" Cversion="1.8.0" condition="Sensor ISSDK Interface I2C">
+      <description>ISSDK FXLS8962 Sensor Driver Files - I2C</description>
+      <files>
+        <file category="header" name="sensors/fxls8962.h" projectpath="sensors"/>
+        <file category="header" name="sensors/fxls8962_drv_i2c.h" projectpath="sensors"/>
+        <file category="sourceC" name="sensors/fxls8962_drv_i2c.c" projectpath="sensors"/>
+      </files>
+    </component>
+    <component Cclass="Sensors" Cgroup="sensors" Csub="issdk_fxls8962" Cvariant="SPI" Cversion="1.8.0" condition="Sensor ISSDK Interface SPI">
+      <description>ISSDK FXLS8962 Sensor Driver Files - SPI</description>
+      <files>
+        <file category="header" name="sensors/fxls8962.h" projectpath="sensors"/>
+        <file category="header" name="sensors/fxls8962_drv_spi.h" projectpath="sensors"/>
+        <file category="sourceC" name="sensors/fxls8962_drv_spi.c" projectpath="sensors"/>
+      </files>
+    </component>
+    <component Cclass="Sensors" Cgroup="sensors" Csub="issdk_fxls8974cf" Cvariant="I2C" Cversion="1.8.0" condition="Sensor ISSDK Interface I2C">
+      <description>ISSDK FXLS8974CF Sensor Driver Files - I2C</description>
+      <files>
+        <file category="header" name="sensors/fxls8974.h" projectpath="sensors"/>
+        <file category="header" name="sensors/fxls8974_drv_i2c.h" projectpath="sensors"/>
+        <file category="sourceC" name="sensors/fxls8974_drv_i2c.c" projectpath="sensors"/>
+      </files>
+    </component>
+    <component Cclass="Sensors" Cgroup="sensors" Csub="issdk_fxls8974cf" Cvariant="SPI" Cversion="1.8.0" condition="Sensor ISSDK Interface SPI">
+      <description>ISSDK FXLS8974CF Sensor Driver Files - SPI</description>
+      <files>
+        <file category="header" name="sensors/fxls8974.h" projectpath="sensors"/>
+        <file category="header" name="sensors/fxls8974_drv_spi.h" projectpath="sensors"/>
+        <file category="sourceC" name="sensors/fxls8974_drv_spi.c" projectpath="sensors"/>
+      </files>
+    </component>
+    <component Cclass="Sensors" Cgroup="sensors" Csub="issdk_fxos8700" Cvariant="I2C" Cversion="1.8.0" condition="Sensor ISSDK Interface I2C">
+      <description>ISSDK FXOS8700 Sensor Driver Files - I2C</description>
+      <files>
+        <file category="header" name="sensors/fxos8700.h" projectpath="sensors"/>
+        <file category="header" name="sensors/fxos8700_drv_i2c.h" projectpath="sensors"/>
+        <file category="sourceC" name="sensors/fxos8700_drv_i2c.c" projectpath="sensors"/>
+      </files>
+    </component>
+    <component Cclass="Sensors" Cgroup="sensors" Csub="issdk_fxos8700" Cvariant="SPI" Cversion="1.8.0" condition="Sensor ISSDK Interface SPI">
+      <description>ISSDK FXOS8700 Sensor Driver Files - SPI</description>
+      <files>
+        <file category="header" name="sensors/fxos8700.h" projectpath="sensors"/>
+        <file category="header" name="sensors/fxos8700_drv_spi.h" projectpath="sensors"/>
+        <file category="sourceC" name="sensors/fxos8700_drv_spi.c" projectpath="sensors"/>
+      </files>
+    </component>
+    <component Cclass="Sensors" Cgroup="sensors" Csub="issdk_mag3110" Cversion="1.8.0" condition="Sensor ISSDK Interface I2C">
+      <description>ISSDK MAG3110 Sensor Driver Files</description>
+      <files>
+        <file category="header" name="sensors/mag3110.h" projectpath="sensors"/>
+        <file category="header" name="sensors/mag3110_drv.h" projectpath="sensors"/>
+        <file category="sourceC" name="sensors/mag3110_drv.c" projectpath="sensors"/>
+      </files>
+    </component>
+    <component Cclass="Sensors" Cgroup="sensors" Csub="issdk_mpl3115" Cversion="1.8.0" condition="Sensor ISSDK Interface I2C">
+      <description>ISSDK MPL3115 Sensor Driver Files</description>
+      <files>
+        <file category="header" name="sensors/mpl3115.h" projectpath="sensors"/>
+        <file category="header" name="sensors/mpl3115_drv.h" projectpath="sensors"/>
+        <file category="sourceC" name="sensors/mpl3115_drv.c" projectpath="sensors"/>
+      </files>
+    </component>
+    <component Cclass="Sensors" Cgroup="drivers" Csub="issdk_interfaces" Cvariant="I2C" Cversion="1.7.0" condition="Sensor Driver Interface I2C">
+      <description>ISSDK Sensor Interface Common - I2C</description>
+      <files>
+        <file category="sourceC" name="sensors/register_io_i2c.c" projectpath="interfaces"/>
+        <file category="sourceC" name="sensors/sensor_io_i2c.c" projectpath="interfaces"/>
+        <file category="header" name="sensors/register_io_i2c.h" projectpath="interfaces"/>
+        <file category="header" name="sensors/sensor_io_i2c.h" projectpath="interfaces"/>
+        <file category="header" name="sensors/sensor_drv.h" projectpath="interfaces"/>
+      </files>
+    </component>
+    <component Cclass="Sensors" Cgroup="drivers" Csub="issdk_interfaces" Cvariant="SPI" Cversion="1.7.0" condition="Sensor Driver Interface SPI">
+      <description>ISSDK Sensor Interface Common - SPI</description>
+      <files>
+        <file category="sourceC" name="sensors/register_io_spi.c" projectpath="interfaces"/>
+        <file category="sourceC" name="sensors/sensor_io_spi.c" projectpath="interfaces"/>
+        <file category="header" name="sensors/register_io_spi.h" projectpath="interfaces"/>
+        <file category="header" name="sensors/sensor_io_spi.h" projectpath="interfaces"/>
+        <file category="header" name="sensors/sensor_drv.h" projectpath="interfaces"/>
+      </files>
+    </component>
+  </components>
+  <csolution> 
+    <clayer type="Shield" path="shields/a8974"  file="Shield.clayer.yml" copy-to="Shield/FRDM-STBI-A8974"/>
+    <clayer type="Shield" path="shields/agm01"  file="Shield.clayer.yml" copy-to="Shield/FRDM-STBC-AGM01"/>
+    <clayer type="Shield" path="shields/agmp03" file="Shield.clayer.yml" copy-to="Shield/FRDM-STBC-AGMP03"/>
+    <clayer type="Shield" path="shields/p3115"  file="Shield.clayer.yml" copy-to="Shield/FRDM-STBC-P3115"/>
+  </csolution>
+
+  <examples>
+    <example name="fxas21002" doc="" folder="examples/sensors/fxas21002">
+      <description>NXP Sensor SDK: Examples for FXAS21002 3-Axis Digital Gyroscope</description>
+      <project>
+        <environment name="csolution" load="fxas21002.csolution.yml"/>
+      </project>
+    </example>
+    <example name="fxls8962" doc="" folder="examples/sensors/fxls8962">
+      <description>NXP Sensor SDK: Examples for FXLS8962 compact 3-Axis Accelerometer</description>
+      <project>
+        <environment name="csolution" load="fxls8962.csolution.yml"/>
+      </project>
+    </example>
+    <example name="fxls8974cf" doc="" folder="examples/sensors/fxls8974cf">
+      <description>NXP Sensor SDK: Examples for FXLS8974CF compact 3-Axis MEMS Accelerometer</description>
+      <project>
+        <environment name="csolution" load="fxls8974cf.csolution.yml"/>
+      </project>
+    </example>
+    <example name="fxos8700" doc="" folder="examples/sensors/fxos8700">
+      <description>NXP Sensor SDK: Examples for FXOS8700 6-Axis linear Accelerometer and Magnetometer</description>
+      <project>
+        <environment name="fxos8700" load="fxos8700.csolution.yml"/>
+      </project>
+    </example>
+    <example name="mag3110" doc="" folder="examples/sensors/mag3110">
+      <description>NXP Sensor SDK: Examples for MAG3110 3-Axis Digital Magnetometer</description>
+      <project>
+        <environment name="csoluton" load="mag3110.csolution.yml"/>
+      </project>
+    </example>
+    <example name="mpl3115" doc="" folder="examples/sensors/mpl3115">
+      <description>NXP Sensor SDK: Examples for MPL3115 Absolute Digital Pressure Sensor</description>
+      <project>
+        <environment name="csolution" load="mpl3115.csoluton.yml"/>
+      </project>
+    </example>
+  </examples>
+</package>

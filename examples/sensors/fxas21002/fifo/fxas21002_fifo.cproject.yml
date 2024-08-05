@@ -1,0 +1,29 @@
+project:
+  description: FXAS21002 Sensor Demo - FIFO Mode
+
+  connections:
+    - connect: FXAS21002 Sensor
+      consumes:
+        - FXAS21002_SENSOR
+        - FXAS21002_I2C
+        - STDOUT
+
+  groups:
+    - group: doc
+      files:
+        - file: readme.txt
+    - group: source
+      files:
+        - file: fxas21002_fifo.c
+
+  components:
+    - component: Sensors:sensors:issdk_fxas21002&I2C
+    - component: Sensors:drivers:issdk_interfaces&I2C
+    - component: Sensors:utils:systick_utils
+    - component: Sensors:issdk_hal
+
+  layers:
+    - layer: $Board-Layer$
+      type: Board
+    - layer: $Shield-Layer$
+      type: Shield
