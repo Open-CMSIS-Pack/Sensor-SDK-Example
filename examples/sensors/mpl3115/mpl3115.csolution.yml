@@ -1,0 +1,40 @@
+solution:
+  created-for: CMSIS-Toolbox@2.5.0
+  cdefault:
+
+  # List of tested compilers that can be selected
+  select-compiler:
+    - compiler: AC6
+    - compiler: GCC
+  # compiler: AC6
+
+  packs:
+    - pack: NXP::ISSDK@>=3.0.0-0
+
+  target-types:
+    # - type: <target_name>
+    #   board: <board_name>
+    #   variables:
+    #     - Board-Layer: <board_layer>.clayer.yml
+    #     - Shield-Layer: <shield_layer>.clayer.yml
+
+  build-types:
+    - type: debug
+      define:
+        - DEBUG
+      optimize: debug
+      debug: on
+
+    - type: release
+      define:
+        - NDEBUG
+      optimize: size
+      debug: off
+
+  projects:
+    - project: ./altitude/mpl3115_altitude.cproject.yml
+    - project: ./fifo/mpl3115_fifo.cproject.yml
+    - project: ./fifo_interrupt/mpl3115_fifo_interrupt.cproject.yml
+    - project: ./normal/mpl3115_normal.cproject.yml
+    - project: ./normal_interrupt/mpl3115_normal_interrupt.cproject.yml
+    - project: ./oneshot/mpl3115_oneshot.cproject.yml
