@@ -1,0 +1,86 @@
+name: Build
+on:
+  workflow_dispatch:
+  pull_request:
+  push:
+    branches: [main]
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+env:
+  TARGET_TYPE: CM4
+  TARGET_DEVICE: ARMCM4
+  TARGET_LAYER: $SolutionDir()$/../../../.ci/Board/Board.clayer.yml
+  SHIELD_DIR: $SolutionDir()$/../../../shields
+  EXAMPLE_DIR: ./examples/sensors
+
+jobs:
+  Build:
+    strategy:
+      fail-fast: false
+      matrix:
+        compiler: [AC6, GCC]
+        solution: [
+          {sensor: fxas21002,   shield: agm01},
+          {sensor: fxls8962,    shield: agmp03},
+          {sensor: fxls8974cf,  shield: a8974},
+          {sensor: fxos8700,    shield: agm01},
+          {sensor: mag3110,     shield: agmp03},
+          {sensor: mpl3115,     shield: p3115}
+        ]
+
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Sensor-SDK-Example
+        uses: actions/checkout@v4
+        with:
+          path: ./Sensor-SDK-Example
+
+      - name: Setup board layer
+        working-directory: ./Sensor-SDK-Example
+        run: |
+          sed -i "s|target-types:|&\n    - type: $TARGET_TYPE\n      device: $TARGET_DEVICE\n      variables:\n      - Board-Layer: $TARGET_LAYER\n      - Shield-Layer: $SHIELD_DIR/${{ matrix.solution.shield }}/Shield.clayer.yml|" $EXAMPLE_DIR/${{ matrix.solution.sensor }}/${{ matrix.solution.sensor }}.csolution.yml
+
+      - name: Cache packs
+        uses: actions/cache@v4
+        with:
+          key: cmsis-packs-${{ hashFiles('**/*.csolution.yml', '**/*.cproject.yml', '**/*.clayer.yml') }}
+          restore-keys: |
+            cmsis-packs-
+          path: /home/runner/.cache/arm/packs
+
+      - name: Prepare vcpkg env
+        uses: ARM-software/cmsis-actions/vcpkg@main
+        with:
+          config: ./Sensor-SDK-Example/.ci/vcpkg-configuration.json
+
+      - name: Initialize CMSIS pack root folder
+        run: |
+          cpackget init https://www.keil.com/pack/index.pidx
+          cpackget update-index
+
+      - name: Use local Sensor-SDK-Example pack
+        working-directory: ./Sensor-SDK-Example
+        run: |
+          cpackget rm NXP.ISSDK || true
+          cpackget add ./NXP.ISSDK.pdsc
+
+      - name: Activate Arm tool license
+        run: |
+          armlm activate --server https://mdk-preview.keil.arm.com --product KEMDK-COM0
+
+      - uses: ammaraskar/gcc-problem-matcher@master
+
+      - name: Build Sensor examples
+        working-directory: ./Sensor-SDK-Example
+        if: always()
+        run: |
+          cbuild $EXAMPLE_DIR/${{ matrix.solution.sensor }}/${{ matrix.solution.sensor }}.csolution.yml --packs --update-rte --toolchain ${{ matrix.compiler }}
+
+      - name: Deactivate Arm tool license
+        if: always()
+        run: |
+          armlm deactivate --product KEMDK-COM0
