@@ -31,7 +31,6 @@ DEFAULT_ARGS=(-c "v")
 PACK_DIRS="
   drivers
   examples
-  licenses
   sensors
   shields
 "
@@ -40,7 +39,9 @@ PACK_DIRS="
 # Default: empty
 #
 PACK_BASE_FILES="
-  LICENSE
+  COPYING-BSD-3
+  LICENSE-Apache-2.0
+  LICENSES
 "
 
 # Specify file names to be deleted from pack build directory

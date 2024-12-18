@@ -1,4 +1,5 @@
-[![License](https://img.shields.io/github/license/Open-CMSIS-Pack/Sensor-SDK-Example?label)](https://github.com/Open-CMSIS-Pack/Sensor-SDK-Example/blob/main/LICENSE)
+[![License: Apache-2.0](https://img.shields.io/badge/License-Apache--2.0-green?label)](https://github.com/Open-CMSIS-Pack/Sensor-SDK-Example/blob/main/LICENSE-Apache-2.0)
+[![License: BSD-3-Clause](https://img.shields.io/badge/License-BSD--3--Clause-green?label)](https://github.com/Open-CMSIS-Pack/Sensor-SDK-Example/blob/main/COPYING-BSD-3)
 [![Build Test](https://img.shields.io/github/actions/workflow/status/Open-CMSIS-Pack/Sensor-SDK-Example/build.yml?logo=arm&logoColor=0091bd&label=Build%20and%20Execution%20Test)](https://github.com/Open-CMSIS-Pack/Sensor-SDK-Example/tree/main/.github/workflows/build.yml)
 
 # Sensor-SDK-Example
