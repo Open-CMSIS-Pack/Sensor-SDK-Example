@@ -39,8 +39,8 @@ PACK_DIRS="
 # Default: empty
 #
 PACK_BASE_FILES="
+  COPYING-BSD-3
   LICENSE-Apache-2.0
-  LICENSE-BSD-3-Clause
   LICENSES
 "
 
