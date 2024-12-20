@@ -31,7 +31,6 @@ DEFAULT_ARGS=(-c "v")
 PACK_DIRS="
   drivers
   examples
-  licenses
   sensors
   shields
 "
