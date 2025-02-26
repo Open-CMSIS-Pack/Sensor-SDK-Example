@@ -3,7 +3,7 @@
 
 # Sensor-SDK-Example
 
-This software pack demonstrates the usage of [CMSIS-Toolbox &raquo; Reference Applications](https://github.com/open-cmsis-pack/cmsis-toolbox/blob/main/docs/ReferenceApplications.md) for the distribution of Sensor interfaces along with example projects. It contains sensor interface middleware that utilizes I2C or SPI [CMSIS-Driver](https://arm-software.github.io/CMSIS_5/Driver/html/index.html) for usage in production code.
+This software pack demonstrates the usage of [CMSIS-Toolbox &raquo; Reference Applications](https://open-cmsis-pack.github.io/cmsis-toolbox/ReferenceApplications) for the distribution of Sensor interfaces along with example projects. It contains sensor interface middleware that utilizes I2C or SPI [CMSIS-Driver](https://arm-software.github.io/CMSIS_5/Driver/html/index.html) for usage in production code.
 
 The pack is based on the [NXP IoT Sensing Software Development Kit (ISSDK)](https://www.nxp.com/design/design-center/software/sensor-toolbox/iot-sensing-software-development-kit-issdk-embedded-software-framework:IOT-SENSING-SDK) and demonstrates how the CMSIS-Toolbox simplifies the distribution of software frameworks. The example projects that are part of the SDK use interfaces of a board layer that is distributed as part of a Board Support Pack (BSP).  Many board layers are already provided in the BSP packs available on [github.com/Open-CMSIS-Pack](https://github.com/Open-CMSIS-Pack) making it easy to evaluate the NXP sensor Arduino shields with range of different microcontroller boards.
 
@@ -22,13 +22,13 @@ The Pack Description file [`NXP.ISSDK.pdsc`](NXP.ISSDK.pdsc) defines the softwar
 
 ## Usage
 
-This pack has not public release yet. Download or fork this repository and install it as a [private pack](https://github.com/Open-CMSIS-Pack/cmsis-toolbox/blob/main/docs/build-tools.md#install-a-private-software-pack) with:
+This pack has not public release yet. Download or fork this repository and install it as a [private pack](https://open-cmsis-pack.github.io/cmsis-toolbox/build-tools#install-a-private-software-pack) with:
 
 ```bash
 cpackget add <path>/NXP.ISSDK.pdsc
 ```
 
-Select a board that provides a board layer in the BSP with [ARDUINO connections](https://github.com/Open-CMSIS-Pack/cmsis-toolbox/blob/main/docs/ReferenceApplications.md#connections). Currently several [ST board BSP](https://github.com/Open-CMSIS-Pack#stm32-packs-with-generator-support) provide such layers, for example the [STM32F469I-DISCO](https://www.keil.arm.com/packs/stm32f469i-disco_bsp-keil/overview/). Add this BSP pack using `cpackget`.
+Select a board that provides a board layer in the BSP with [ARDUINO connections](https://open-cmsis-pack.github.io/cmsis-toolbox/ReferenceApplications#connections). Currently several [ST board BSP](https://github.com/Open-CMSIS-Pack#stm32-packs-with-generator-support) provide such layers, for example the [STM32F469I-DISCO](https://www.keil.arm.com/packs/stm32f469i-disco_bsp-keil/overview/). Add this BSP pack using `cpackget`.
 
 You may now use the [Keil Studio for VS Code](https://www.keil.arm.com/) or the [VS Code CMSIS Solution](https://marketplace.visualstudio.com/items?itemName=Arm.cmsis-csolution) extension and open the **Create New Solution** dialog to select this board and a sensor example.
 
@@ -44,7 +44,7 @@ This completes the setup of the example that now contains the settings for the l
 
 ## Project Structure
 
-This AWS MQTT Mutual Authentication example uses the [CMSIS-Toolbox](https://github.com/Open-CMSIS-Pack/cmsis-toolbox/blob/main/docs/README.md#cmsis-toolbox)
+This AWS MQTT Mutual Authentication example uses the [CMSIS-Toolbox](https://open-cmsis-pack.github.io/cmsis-toolbox/)
 *csolution project format* with CMSIS software packs and software layers. The default configuration uses a AVH-FVP simulation model.
 No physical hardware is required to explore this example. By using different layers it can run on physical evaluation boards,
 use different communication stacks, or WiFi modules.
@@ -62,7 +62,7 @@ Use **Build solution** to translate the application.
 
 ### Manual Configuration
 
-Refer to [CMSIS-Toolbox - Reference Applications - Usage](https://github.com/Open-CMSIS-Pack/cmsis-toolbox/blob/main/docs/ReferenceApplications.md#usage) for use command line tools to obtain above information.  However you may also use the CMSIS-Toolbox command `csolution list layers` to obtain information about the layers that are available in the installed packs. These layers may be copied to your project directory and defined as shown above.
+Refer to [CMSIS-Toolbox - Reference Applications - Usage](https://open-cmsis-pack.github.io/cmsis-toolbox/ReferenceApplications#usage) for use command line tools to obtain above information.  However you may also use the CMSIS-Toolbox command `csolution list layers` to obtain information about the layers that are available in the installed packs. These layers may be copied to your project directory and defined as shown above.
 
 ```bash
 csolution list layers
